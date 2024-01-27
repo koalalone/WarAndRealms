@@ -53,6 +53,7 @@ public class AllyControl : MonoBehaviour
 
     private void Attack()
     {
+        anim.SetTrigger("isAttacking");
         _attackTime = Time.time + _attackSpeed;
         anim.Play("axeman_cyan_attack");
         _currentEnemy.GetComponent<EnemyControl>().Damage(_damage);

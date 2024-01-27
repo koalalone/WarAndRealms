@@ -46,9 +46,11 @@ public class EnemyControl : MonoBehaviour
     }
     private void Attack()
     {
+        anim.SetTrigger("isAttacking");
         _attackTime = Time.time + _attackSpeed;
-        anim.Play("assasin_red_attack");
         _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
+
+
     }
 
     public void Damage(float damage)

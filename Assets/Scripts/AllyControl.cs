@@ -37,11 +37,18 @@ public class AllyControl : MonoBehaviour
 
         else
         {
-            if (Time.time > _attackTime && _currentEnemy) 
+            if (!_currentEnemy) 
+            {
+                _isAttacking = false;
+            }
+            else if (Time.time > _attackTime) 
             {
                 Attack();
             }
-            
+            else
+            {
+
+            }
             
         }
     }
@@ -54,7 +61,6 @@ public class AllyControl : MonoBehaviour
     private void Attack()
     {
         _attackTime = Time.time + _attackSpeed;
-        anim.Play("axeman_cyan_attack");
         _currentEnemy.GetComponent<EnemyControl>().Damage(_damage);
     }
 
@@ -62,8 +68,7 @@ public class AllyControl : MonoBehaviour
     {
         _hp -= damage;
         if (_hp <= 0)
-        {
-            _isAttacking = false;
+        {   
             Debug.Log("dead1");
             Destroy(gameObject);
         }

@@ -38,16 +38,24 @@ public class EnemyControl : MonoBehaviour
             
         else
         {
-            if (Time.time > _attackTime && _currentEnemy)
+            if (!_currentEnemy)
+            {
+                _isAttacking = false;
+            }
+
+            else if (Time.time > _attackTime)
             {
                 Attack();
+            }
+            else
+            {
+
             }
         }
     }
     private void Attack()
     {
         _attackTime = Time.time + _attackSpeed;
-        anim.Play("assasin_red_attack");
         _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
     }
 
@@ -56,7 +64,6 @@ public class EnemyControl : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0)
         {
-            _isAttacking = false;
             Debug.Log("dead2");
             Destroy(gameObject);
         }

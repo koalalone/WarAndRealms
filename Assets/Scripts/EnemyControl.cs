@@ -15,9 +15,12 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] private bool _isAttacking;
     [SerializeField] private float _range;
     private GameObject _currentEnemy;
+    private float _attackTime;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         _isAttacking = false;
         _currentEnemy = null;
         //InvokeRepeating("FindAllies", 0.0f, 1.0f);
@@ -35,7 +38,27 @@ public class EnemyControl : MonoBehaviour
             
         else
         {
-            Attack();
+            if (Time.time > _attackTime && _currentEnemy)
+            {
+                Attack();
+            }
+        }
+    }
+    private void Attack()
+    {
+        _attackTime = Time.time + _attackSpeed;
+        anim.Play("assasin_red_attack");
+        _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
+    }
+
+    public void Damage(float damage)
+    {
+        _hp -= damage;
+        if (_hp <= 0)
+        {
+            _isAttacking = false;
+            Debug.Log("dead2");
+            Destroy(gameObject);
         }
     }
 
@@ -44,10 +67,7 @@ public class EnemyControl : MonoBehaviour
         transform.position += new Vector3(-1 * _moveSpeed * Time.deltaTime, 0, 0); 
     }
 
-    private void Attack()
-    {
-        
-    }
+    
     private void SetEnemyData()
     {
         _hp = _unitData.hp;
@@ -85,6 +105,7 @@ public class EnemyControl : MonoBehaviour
         else
         {
             Debug.Log("Düþman görülmedi");
+            _currentEnemy = null;
         }
 
     }

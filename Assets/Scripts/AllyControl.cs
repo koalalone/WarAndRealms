@@ -13,6 +13,7 @@ public class AllyControl : MonoBehaviour
     [SerializeField] private bool _isAttacking;
     [SerializeField] private float _range;
     private GameObject _currentEnemy;
+    private float _attackTime;
 
     private Animator anim;
     // Start is called before the first frame update
@@ -36,7 +37,12 @@ public class AllyControl : MonoBehaviour
 
         else
         {
-            Attack();
+            if (Time.time > _attackTime && _currentEnemy) 
+            {
+                Attack();
+            }
+            
+            
         }
     }
 
@@ -47,7 +53,20 @@ public class AllyControl : MonoBehaviour
 
     private void Attack()
     {
+        _attackTime = Time.time + _attackSpeed;
         anim.Play("axeman_cyan_attack");
+        _currentEnemy.GetComponent<EnemyControl>().Damage(_damage);
+    }
+
+    public void Damage(float damage)
+    {
+        _hp -= damage;
+        if (_hp <= 0)
+        {
+            _isAttacking = false;
+            Debug.Log("dead1");
+            Destroy(gameObject);
+        }
     }
     private void SetEnemyData()
     {

@@ -13,9 +13,12 @@ public class AllyControl : MonoBehaviour
     [SerializeField] private bool _isAttacking;
     [SerializeField] private float _range;
     private GameObject _currentEnemy;
+
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         _isAttacking = false;
         _currentEnemy = null;
         //InvokeRepeating("FindAllies", 0.0f, 1.0f);
@@ -44,7 +47,7 @@ public class AllyControl : MonoBehaviour
 
     private void Attack()
     {
-
+        anim.Play("axeman_cyan_attack");
     }
     private void SetEnemyData()
     {

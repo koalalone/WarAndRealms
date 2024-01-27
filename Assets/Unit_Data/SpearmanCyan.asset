@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   damage: 2
-  moveSpeed: 3
+  moveSpeed: 1
   attackSpeed: 0.8
+  race: Cyan
+  range: 0.5

@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using UnityEngine;
 
-public class EnemyControl : MonoBehaviour
+public class AllyControl : MonoBehaviour
 {
     [SerializeField] private float _hp;
     [SerializeField] private float _damage;
@@ -29,24 +27,24 @@ public class EnemyControl : MonoBehaviour
     {
         if (!_isAttacking)
         {
-            FindAllies();
-            MoveLeft();
+            FindEnemies();
+            MoveRight();
         }
-            
+
         else
         {
             Attack();
         }
     }
 
-    private void MoveLeft()
+    private void MoveRight()
     {
-        transform.position += new Vector3(-1 * _moveSpeed * Time.deltaTime, 0, 0); 
+        transform.position += new Vector3(_moveSpeed * Time.deltaTime, 0, 0);
     }
 
     private void Attack()
     {
-        
+
     }
     private void SetEnemyData()
     {
@@ -58,14 +56,14 @@ public class EnemyControl : MonoBehaviour
         _range = _unitData.range;
     }
 
-    private void FindAllies()
+    private void FindEnemies()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, _range);
 
         float nearestDistance = Mathf.Infinity;
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Ally"))
+            if (hitCollider.CompareTag("Enemy"))
             {
                 float distanceX = Mathf.Abs(transform.position.x - hitCollider.transform.position.x);
                 if (distanceX < nearestDistance)
@@ -74,12 +72,12 @@ public class EnemyControl : MonoBehaviour
                     _currentEnemy = hitCollider.transform.gameObject;
                 }
             }
-            
-            
+
+
         }
         if (_currentEnemy != null)
         {
-            Debug.Log("Nearest ally: " + _currentEnemy.gameObject.name);
+            Debug.Log("Nearest enemy: " + _currentEnemy.gameObject.name);
             _isAttacking = true;
         }
         else

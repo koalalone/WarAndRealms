@@ -9,4 +9,6 @@ public class Data : ScriptableObject
     public float damage;
     public float moveSpeed;
     public float attackSpeed;
+    public string race;
+    public float range;
 }

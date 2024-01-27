@@ -41,6 +41,7 @@ public class EnemyControl : MonoBehaviour
             if (!_currentEnemy)
             {
                 _isAttacking = false;
+                anim.ResetTrigger("isAttacking");
             }
 
             else if (Time.time > _attackTime)
@@ -55,9 +56,13 @@ public class EnemyControl : MonoBehaviour
     }
     private void Attack()
     {
+        
         anim.SetTrigger("isAttacking");
         _attackTime = Time.time + _attackSpeed;
-        _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
+        if (_currentEnemy.CompareTag("Ally"))
+            _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
+        else
+            _currentEnemy.GetComponent<AllyBase>().Damage(_damage);
 
 
     }
@@ -95,7 +100,7 @@ public class EnemyControl : MonoBehaviour
         float nearestDistance = Mathf.Infinity;
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Ally"))
+            if (hitCollider.CompareTag("Ally") || hitCollider.CompareTag("AllyBase"))
             {
                 float distanceX = Mathf.Abs(transform.position.x - hitCollider.transform.position.x);
                 if (distanceX < nearestDistance)
@@ -109,12 +114,12 @@ public class EnemyControl : MonoBehaviour
         }
         if (_currentEnemy != null)
         {
-            Debug.Log("Nearest ally: " + _currentEnemy.gameObject.name);
+            //Debug.Log("Nearest ally: " + _currentEnemy.gameObject.name);
             _isAttacking = true;
         }
         else
         {
-            Debug.Log("Düþman görülmedi");
+            //Debug.Log("Düþman görülmedi");
             _currentEnemy = null;
         }
 

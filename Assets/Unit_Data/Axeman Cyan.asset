@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e572805d7c28d20409a0e68d30e434bc, type: 3}
-  m_Name: AxemanRed
+  m_Name: Axeman Cyan
   m_EditorClassIdentifier: 
   hp: 10
   damage: 3

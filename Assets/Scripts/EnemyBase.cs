@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour
     {
         _enemySpawnPosition = new Vector3(9, 1.75f, 0);
         _hp = 10;
-        StartCoroutine(SpawnEnemyRoutine());
+        //StartCoroutine(SpawnEnemyRoutine());
     }
 
     // Update is called once per frame
@@ -35,9 +35,17 @@ public class EnemyBase : MonoBehaviour
 
     private void Spawn()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             Instantiate(prefab[0], _enemySpawnPosition, Quaternion.identity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Instantiate(prefab[1], _enemySpawnPosition, Quaternion.identity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            Instantiate(prefab[2], _enemySpawnPosition, Quaternion.identity);
         }
     }
 

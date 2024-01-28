@@ -34,10 +34,18 @@ public class AllyBase : MonoBehaviour
     private void Spawn()
     {
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Instantiate(prefab[0], _allySpawnPosition, Quaternion.identity);
         }
-        
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Instantiate(prefab[1], _allySpawnPosition, Quaternion.identity);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Instantiate(prefab[2], _allySpawnPosition, Quaternion.identity);
+        }
+
     }
 }

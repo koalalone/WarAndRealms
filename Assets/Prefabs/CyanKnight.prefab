@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9080808021323088119}
   - component: {fileID: 6762003198764524947}
   - component: {fileID: 2092924543705075683}
+  - component: {fileID: 6885755541599066637}
   m_Layer: 0
   m_Name: CyanKnight
   m_TagString: Ally
@@ -172,4 +173,32 @@ MonoBehaviour:
   _race: 
   _unitData: {fileID: 11400000, guid: 594dcd6de0a535948833e6835bf45ea0, type: 2}
   _isAttacking: 0
+  _isIdle: 0
   _range: 0
+--- !u!50 &6885755541599066637
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307982093910837477}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

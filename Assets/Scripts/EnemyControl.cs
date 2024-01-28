@@ -134,6 +134,7 @@ public class EnemyControl : MonoBehaviour
         {
             Debug.Log("anan " + unit.gameObject);
             _isIdle = true;
+            anim.SetTrigger("isIdle");
         }
     }
 
@@ -142,6 +143,7 @@ public class EnemyControl : MonoBehaviour
         if (unit.CompareTag("Enemy"))
         {
             _isIdle = false;
+            anim.ResetTrigger("isIdle");
         }
     }
 }

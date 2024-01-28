@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _isGameOver = true;
+        Time.timeScale = 0f;
     }
 
     private void TogglePause()

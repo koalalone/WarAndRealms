@@ -67,7 +67,7 @@ public class AllyControl : MonoBehaviour
             _currentEnemy.GetComponent<EnemyControl>().Damage(_damage);
         else
             _currentEnemy.GetComponent<EnemyBase>().Damage(_damage);
-        Debug.Log("Axeman Cyan hit " + _currentEnemy.name + " " + Time.time);
+        Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
     }
 
     public void Damage(float damage)

@@ -13,6 +13,7 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] private string _race;
     [SerializeField] private Data _unitData;
     [SerializeField] private bool _isAttacking;
+    [SerializeField] private bool _isIdle;
     [SerializeField] private float _range;
     private GameObject _currentEnemy;
     private float _attackTime;
@@ -22,6 +23,7 @@ public class EnemyControl : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         _isAttacking = false;
+        _isIdle = false;
         _currentEnemy = null;
         //InvokeRepeating("FindAllies", 0.0f, 1.0f);
         SetEnemyData();
@@ -30,7 +32,7 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_isAttacking)
+        if (!_isAttacking && !_isIdle)
         {
             FindAllies();
             MoveLeft();
@@ -63,7 +65,7 @@ public class EnemyControl : MonoBehaviour
             _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
         else
             _currentEnemy.GetComponent<AllyBase>().Damage(_damage);
-        Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
+        //Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
 
     }
 
@@ -123,5 +125,23 @@ public class EnemyControl : MonoBehaviour
             _currentEnemy = null;
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D unit)
+    {
+        float distance = this.transform.position.x - unit.transform.position.x;
+        if (unit.CompareTag("Enemy") && distance >= 0)
+        {
+            Debug.Log("anan " + unit.gameObject);
+            _isIdle = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D unit)
+    {
+        if (unit.CompareTag("Enemy"))
+        {
+            _isIdle = false;
+        }
     }
 }

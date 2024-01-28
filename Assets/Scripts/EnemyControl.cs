@@ -15,6 +15,7 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] private bool _isAttacking;
     [SerializeField] private bool _isIdle;
     [SerializeField] private float _range;
+    [SerializeField] private float _cost;
     private GameObject _currentEnemy;
     private float _attackTime;
     private Animator anim;
@@ -93,6 +94,7 @@ public class EnemyControl : MonoBehaviour
         _attackSpeed = _unitData.attackSpeed;
         _race = _unitData.race;
         _range = _unitData.range;
+        _cost = _unitData.cost;
     }
 
     private void FindAllies()
@@ -145,5 +147,10 @@ public class EnemyControl : MonoBehaviour
             _isIdle = false;
             anim.ResetTrigger("isIdle");
         }
+    }
+
+    public float getCost()
+    {
+        return _cost;
     }
 }

@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyBase : MonoBehaviour
 {
+
     [SerializeField] private float _hp;
     public GameObject[] prefab;
     private Vector2 _enemySpawnPosition;
-    private bool _isQueued;
     private float spawnRadius = 0.5f;
+    private float food = 4;
+    private float foodRate = 0.2f;
     private Queue<GameObject> enemyQueue = new Queue<GameObject>();
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _enemySpawnPosition = new Vector2(9, 1.75f);
         _hp = 10;
         StartCoroutine(SpawnEnemyRoutine());
@@ -29,7 +34,7 @@ public class EnemyBase : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0) 
         {
-            Debug.Log("Game Over");
+            _gameManager.GameOver("Winner");
             Destroy(gameObject);
         }
     }

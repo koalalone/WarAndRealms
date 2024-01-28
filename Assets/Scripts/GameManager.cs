@@ -23,8 +23,9 @@ public class GameManager : MonoBehaviour
            ExitGame();
         }
     }
-    public void GameOver()
+    public void GameOver(string text)
     {
+        Debug.Log(text);
         _isGameOver = true;
         Time.timeScale = 0f;
     }

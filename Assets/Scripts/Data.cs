@@ -11,4 +11,5 @@ public class Data : ScriptableObject
     public float attackSpeed;
     public string race;
     public float range;
+    public float cost;
 }

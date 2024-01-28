@@ -18,3 +18,4 @@ MonoBehaviour:
   attackSpeed: 1.35
   race: Red
   range: 0.2
+  cost: 3

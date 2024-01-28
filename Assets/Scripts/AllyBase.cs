@@ -7,12 +7,19 @@ public class AllyBase : MonoBehaviour
     [SerializeField] private float _hp;
     public GameObject[] prefab;
     private Vector3 _allySpawnPosition;
-    
+    private UIManager _manager;
+    private GameManager _gameManager;
+    private float _food = 4f;
+    private float _foodRate = 0.2f;
+    private float _foodProductionTime = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
+        _manager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _allySpawnPosition = new Vector3(-9, 1.75f, 0);
         _hp = 10;
+        InvokeRepeating("AddFood", 0, _foodProductionTime);
     }
 
     // Update is called once per frame
@@ -26,7 +33,7 @@ public class AllyBase : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0)
         {
-            Debug.Log("Game Over");
+            _gameManager.GameOver("Loser");
             Destroy(gameObject);
         }
     }
@@ -46,6 +53,12 @@ public class AllyBase : MonoBehaviour
         {
             Instantiate(prefab[2], _allySpawnPosition, Quaternion.identity);
         }
+        //_manager.UpdateScore(-2);
+    }
 
+    private void AddFood()
+    {
+        _food += _foodRate;
+        _manager.UpdateScore(_food);
     }
 }

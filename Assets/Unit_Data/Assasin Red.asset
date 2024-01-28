@@ -18,3 +18,4 @@ MonoBehaviour:
   attackSpeed: 1.1
   race: Cyan
   range: 0.2
+  cost: 3

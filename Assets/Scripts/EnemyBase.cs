@@ -13,11 +13,12 @@ public class EnemyBase : MonoBehaviour
     private float food = 4;
     private float foodRate = 0.2f;
     private Queue<GameObject> enemyQueue = new Queue<GameObject>();
-    private GameManager _gameManager;
+
+    private UIManager _uiManager;
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _enemySpawnPosition = new Vector2(9, 1.75f);
         _hp = 10;
         StartCoroutine(SpawnEnemyRoutine());
@@ -34,7 +35,7 @@ public class EnemyBase : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0) 
         {
-            _gameManager.GameOver("Winner");
+            _uiManager.GameOver("Winner");
             Destroy(gameObject);
         }
     }

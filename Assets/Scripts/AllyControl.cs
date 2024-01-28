@@ -130,7 +130,7 @@ public class AllyControl : MonoBehaviour
         float distance = this.transform.position.x - unit.transform.position.x;
         if (unit.CompareTag("Ally") && distance <= 0)
         {
-            Debug.Log("anan " + unit.gameObject);
+            //Debug.Log("anan " + unit.gameObject);
             _isIdle = true;
             anim.SetTrigger("isIdle");
         }

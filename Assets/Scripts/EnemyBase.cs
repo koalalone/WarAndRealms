@@ -6,15 +6,16 @@ public class EnemyBase : MonoBehaviour
 {
     [SerializeField] private float _hp;
     public GameObject[] prefab;
-    private Vector3 _enemySpawnPosition;
+    private Vector2 _enemySpawnPosition;
     private bool _isQueued;
+    private float spawnRadius = 0.5f;
     private Queue<GameObject> enemyQueue = new Queue<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        _enemySpawnPosition = new Vector3(9, 1.75f, 0);
+        _enemySpawnPosition = new Vector2(9, 1.75f);
         _hp = 10;
-        //StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
     }
 
     // Update is called once per frame
@@ -52,21 +53,35 @@ public class EnemyBase : MonoBehaviour
     private IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(1f);
+
         
-        while (!_isQueued)
+        while (true)
         {
             int randomIndex = Random.Range(0, prefab.Length);
-            GameObject newEnemy = Instantiate(prefab[randomIndex], _enemySpawnPosition, Quaternion.identity);
-            yield return new WaitForSeconds(3f);
+            bool canSpawn = checkSpace();
+            Debug.Log(canSpawn);
+            enemyQueue.Enqueue(prefab[randomIndex]);
+            if (canSpawn)
+            {
+                Instantiate(enemyQueue.Dequeue(), _enemySpawnPosition, Quaternion.identity);
+            }
+            
+            yield return new WaitForSeconds(1f);
         }
 
-        while(_isQueued)
-        {
-
-        }
         //newEnemy.transform.parent = _enemyContainer.transform;
         //yield return new WaitForSeconds(1f);
 
 
+    }
+    private bool checkSpace()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_enemySpawnPosition, spawnRadius);
+        
+        if (colliders.Length > 1)
+        {
+            return false;
+        }
+        return true;
     }
 }

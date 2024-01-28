@@ -74,7 +74,7 @@ public class EnemyControl : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0)
         {
-            Debug.Log("dead2");
+            //Debug.Log("dead2");
             Destroy(gameObject);
         }
     }
@@ -132,7 +132,7 @@ public class EnemyControl : MonoBehaviour
         float distance = this.transform.position.x - unit.transform.position.x;
         if (unit.CompareTag("Enemy") && distance >= 0)
         {
-            Debug.Log("anan " + unit.gameObject);
+            //Debug.Log("anan " + unit.gameObject);
             _isIdle = true;
             anim.SetTrigger("isIdle");
         }

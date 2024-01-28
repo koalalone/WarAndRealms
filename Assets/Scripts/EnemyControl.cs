@@ -63,7 +63,7 @@ public class EnemyControl : MonoBehaviour
             _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
         else
             _currentEnemy.GetComponent<AllyBase>().Damage(_damage);
-
+        Debug.Log("Assasin Red hit " + _currentEnemy.name + " " + Time.time);
 
     }
 

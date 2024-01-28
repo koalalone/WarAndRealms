@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e572805d7c28d20409a0e68d30e434bc, type: 3}
   m_Name: Assasin Red
   m_EditorClassIdentifier: 
-  hp: 10
+  hp: 24
   damage: 2
   moveSpeed: 1
-  attackSpeed: 0.8
+  attackSpeed: 1.1
   race: Cyan
-  range: 0.5
+  range: 0.2

@@ -35,7 +35,7 @@ public class EnemyBase : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0) 
         {
-            _uiManager.GameOver("Winner");
+            _uiManager.GameOver("Victory");
             Destroy(gameObject);
         }
     }

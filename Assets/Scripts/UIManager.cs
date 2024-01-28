@@ -8,20 +8,23 @@ public class UIManager : MonoBehaviour
     private GameManager _gameManager;
     [SerializeField]
     private TextMeshProUGUI _foodText;
+    [SerializeField]
+    private TextMeshProUGUI _gameOverText;
     // Start is called before the first frame update
     void Start()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void UpdateScore(float food)
+    public void UpdateFood(float food)
     {
 
-        _foodText.text = "Food: " + food.ToString("F1"); 
+        _foodText.text = food.ToString("F1"); 
     }
 
     public void GameOver(string text)
     {
         _gameManager.GameOver(text);
+        _gameOverText.text = text;
     }
 }

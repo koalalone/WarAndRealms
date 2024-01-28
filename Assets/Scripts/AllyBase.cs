@@ -32,32 +32,63 @@ public class AllyBase : MonoBehaviour
         _hp -= damage;
         if (_hp <= 0)
         {
-            _uiManager.GameOver("Loser");
+            _uiManager.GameOver("Defeat");
             Destroy(gameObject);
         }
     }
 
     private void Spawn()
     {
-
+        float cost;
+        GameObject spawned;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Instantiate(prefab[0], _allySpawnPosition, Quaternion.identity);
+            cost = prefab[0].GetComponent<AllyControl>().getData().cost;
+            if (_food >= cost)
+            {
+                spawned = Instantiate(prefab[0], _allySpawnPosition, Quaternion.identity);
+                _food -= cost;
+                Debug.Log(prefab[0].name + " " + cost + " yedi");
+            }
+            else
+            {
+                return;
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Instantiate(prefab[1], _allySpawnPosition, Quaternion.identity);
+            cost = prefab[1].GetComponent<AllyControl>().getData().cost;
+            if (_food >= cost)
+            {
+                spawned = Instantiate(prefab[1], _allySpawnPosition, Quaternion.identity);
+                _food -= cost;
+                Debug.Log(prefab[1].name + " " + cost + " yedi");
+            }
+            else
+            {
+                return;
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Instantiate(prefab[2], _allySpawnPosition, Quaternion.identity);
+            cost = prefab[2].GetComponent<AllyControl>().getData().cost;
+            if (_food >= cost)
+            {
+                spawned = Instantiate(prefab[2], _allySpawnPosition, Quaternion.identity);
+                _food -= cost;
+                Debug.Log(prefab[2].name + " " + cost + " yedi");
+            }
+            else
+            {
+                return;
+            }
         }
-        //_manager.UpdateScore(-2);
+        _uiManager.UpdateFood(_food);
     }
 
     private void AddFood()
     {
         _food += _foodRate;
-        _uiManager.UpdateScore(_food);
+        _uiManager.UpdateFood(_food);
     }
 }

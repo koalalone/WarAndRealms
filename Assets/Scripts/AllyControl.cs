@@ -150,4 +150,9 @@ public class AllyControl : MonoBehaviour
     {
         return _cost;
     }
+
+    public Data getData()
+    {
+        return _unitData;
+    }
 }

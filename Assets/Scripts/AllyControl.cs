@@ -146,11 +146,7 @@ public class AllyControl : MonoBehaviour
             anim.ResetTrigger("isIdle");
         }
     }
-    public float getCost()
-    {
-        return _cost;
-    }
-
+    
     public Data getData()
     {
         return _unitData;

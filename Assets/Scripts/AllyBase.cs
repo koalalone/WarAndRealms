@@ -8,10 +8,13 @@ public class AllyBase : MonoBehaviour
     public GameObject[] prefab;
     private Vector3 _allySpawnPosition;
     private UIManager _uiManager;
-    
+
+    private float spawnRadius = 0.5f;
     private float _food = 4f;
-    private float _foodRate = 0.2f;
+    private float _foodRate = 0.5f;
     private float _foodProductionTime = 0.5f;
+
+    private Queue<GameObject> allyQueue = new Queue<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,18 @@ public class AllyBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Spawn();
+        if (allyQueue.Count > 0)
+        {
+            SpawnFromQueue();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            Spawn(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            Spawn(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            Spawn(2);
+        
     }
 
     public void Damage(float damage)
@@ -37,58 +51,64 @@ public class AllyBase : MonoBehaviour
         }
     }
 
-    private void Spawn()
+    private void Spawn(int allyId)
     {
-        float cost;
-        GameObject spawned;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        Debug.Log("Queue Count: " + allyQueue.Count);
+        float cost = prefab[allyId].GetComponent<AllyControl>().getData().cost;
+        if (_food < cost)
         {
-            cost = prefab[0].GetComponent<AllyControl>().getData().cost;
-            if (_food >= cost)
+            return;
+        } 
+        
+        bool canSpawn = checkSpace();
+        Debug.Log("dada " + canSpawn);
+        if (!canSpawn)
+        {
+            if (allyQueue.Count < 3)
             {
-                spawned = Instantiate(prefab[0], _allySpawnPosition, Quaternion.identity);
-                _food -= cost;
-                Debug.Log(prefab[0].name + " " + cost + " yedi");
+                allyQueue.Enqueue(prefab[allyId]);
+            }
+        }
+        else
+        {
+            if (allyQueue.Count > 0 && allyQueue.Count < 3)
+            {
+                allyQueue.Enqueue(prefab[allyId]);
             }
             else
             {
-                return;
+                Instantiate(prefab[allyId], _allySpawnPosition, Quaternion.identity);
             }
+            
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            cost = prefab[1].GetComponent<AllyControl>().getData().cost;
-            if (_food >= cost)
-            {
-                spawned = Instantiate(prefab[1], _allySpawnPosition, Quaternion.identity);
-                _food -= cost;
-                Debug.Log(prefab[1].name + " " + cost + " yedi");
-            }
-            else
-            {
-                return;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            cost = prefab[2].GetComponent<AllyControl>().getData().cost;
-            if (_food >= cost)
-            {
-                spawned = Instantiate(prefab[2], _allySpawnPosition, Quaternion.identity);
-                _food -= cost;
-                Debug.Log(prefab[2].name + " " + cost + " yedi");
-            }
-            else
-            {
-                return;
-            }
-        }
+
+        Debug.Log(prefab[allyId].name + " " + cost + " yedi");
+        _food -= cost;
         _uiManager.UpdateFood(_food);
     }
 
+    private void SpawnFromQueue()
+    {
+        bool canSpawn = checkSpace();
+        if (canSpawn)
+        {
+            Instantiate(allyQueue.Dequeue(), _allySpawnPosition, Quaternion.identity);
+        }
+    }
     private void AddFood()
     {
         _food += _foodRate;
         _uiManager.UpdateFood(_food);
+    }
+
+    private bool checkSpace()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_allySpawnPosition, spawnRadius);
+
+        if (colliders.Length > 1)
+        {
+            return false;
+        }
+        return true;
     }
 }

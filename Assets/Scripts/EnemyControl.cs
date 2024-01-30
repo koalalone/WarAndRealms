@@ -149,8 +149,8 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    public float getCost()
+    public Data getData()
     {
-        return _cost;
+        return _unitData;
     }
 }

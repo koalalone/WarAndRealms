@@ -66,13 +66,17 @@ public class EnemyBase : MonoBehaviour
             int randomIndex = Random.Range(0, prefab.Length);
             bool canSpawn = checkSpace();
             Debug.Log(canSpawn);
-            enemyQueue.Enqueue(prefab[randomIndex]);
+            if (enemyQueue.Count <= 3)
+            {
+                enemyQueue.Enqueue(prefab[randomIndex]);
+            }
+            
             if (canSpawn)
             {
                 Instantiate(enemyQueue.Dequeue(), _enemySpawnPosition, Quaternion.identity);
             }
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(4f);
         }
 
         //newEnemy.transform.parent = _enemyContainer.transform;

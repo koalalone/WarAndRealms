@@ -68,6 +68,10 @@ public class AllyBase : MonoBehaviour
             {
                 allyQueue.Enqueue(prefab[allyId]);
             }
+            else
+            {
+                cost = 0;
+            }
         }
         else
         {

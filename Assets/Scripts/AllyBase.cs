@@ -15,12 +15,18 @@ public class AllyBase : MonoBehaviour
     private float _foodProductionTime = 0.5f;
 
     private Queue<GameObject> allyQueue = new Queue<GameObject>();
+    private float[] _unitCosts = new float[3];
+
     // Start is called before the first frame update
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _allySpawnPosition = new Vector3(-9, 1.75f, 0);
         _hp = 10;
+        for (int i = 0; i < prefab.Length; i++)
+        {
+            _unitCosts[i] = prefab[i].GetComponent<AllyControl>().getData().cost;
+        }
         InvokeRepeating("AddFood", 0, _foodProductionTime);
     }
 
@@ -32,12 +38,12 @@ public class AllyBase : MonoBehaviour
             SpawnFromQueue();
         }
         
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
             Spawn(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             Spawn(1);
         else if (Input.GetKeyDown(KeyCode.Alpha3))
-            Spawn(2);
+            Spawn(2);*/
         
     }
 
@@ -51,10 +57,10 @@ public class AllyBase : MonoBehaviour
         }
     }
 
-    private void Spawn(int allyId)
+    public void Spawn(int allyId)
     {
         Debug.Log("Queue Count: " + allyQueue.Count);
-        float cost = prefab[allyId].GetComponent<AllyControl>().getData().cost;
+        float cost = _unitCosts[allyId];
         if (_food < cost)
         {
             return;
@@ -114,5 +120,10 @@ public class AllyBase : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public float[] getCosts()
+    {
+        return _unitCosts;
     }
 }

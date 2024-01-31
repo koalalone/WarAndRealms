@@ -63,12 +63,25 @@ public class EnemyBase : MonoBehaviour
         
         while (true)
         {
-            int randomIndex = Random.Range(0, prefab.Length);
+            float luck = Random.value;
             bool canSpawn = checkSpace();
-            Debug.Log(canSpawn);
+            //Debug.Log(canSpawn);
             if (enemyQueue.Count < 3)
             {
-                enemyQueue.Enqueue(prefab[randomIndex]);
+                int index;
+                if (luck >= 0.5f)
+                {
+                    index = 0;
+                }
+                else if(luck >= 0.2f)
+                {
+                    index = 1;
+                }
+                else
+                {
+                    index = 2;
+                }
+                enemyQueue.Enqueue(prefab[index]);
             }
             
             if (canSpawn)
@@ -76,7 +89,7 @@ public class EnemyBase : MonoBehaviour
                 Instantiate(enemyQueue.Dequeue(), _enemySpawnPosition, Quaternion.identity);
             }
             
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(5f);
         }
 
         //newEnemy.transform.parent = _enemyContainer.transform;

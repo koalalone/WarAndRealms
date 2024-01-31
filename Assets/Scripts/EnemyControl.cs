@@ -33,10 +33,14 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_isAttacking && !_isIdle)
+        if (!_isAttacking)
         {
             FindAllies();
-            MoveLeft();
+            if (!_isIdle)
+            {
+                MoveLeft();
+            }
+            
         }
             
         else

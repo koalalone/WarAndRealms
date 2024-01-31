@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyControl : MonoBehaviour
 {
@@ -18,6 +20,11 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] private float _cost;
     private GameObject _currentEnemy;
     private float _attackTime;
+
+    public GameObject projectilePrefab;
+    private GameObject projectile;
+    private Vector2 target;
+
     private Animator anim;
     // Start is called before the first frame update
     void Start()
@@ -60,20 +67,40 @@ public class EnemyControl : MonoBehaviour
 
             }
         }
+
+        if (projectile != null)
+        {
+            target = (_currentEnemy != null) ? _currentEnemy.transform.position : target;
+            if (Vector2.Distance(projectile.transform.position, target) < 0.1f || Vector2.Distance(projectile.transform.position, transform.position) > 4.1f)
+            {
+                Destroy(projectile);
+            }
+        }
+
     }
     private void Attack()
     {
         
         anim.SetTrigger("isAttacking");
         _attackTime = Time.time + _attackSpeed;
+
+        if (projectilePrefab != null)
+        {
+            projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            projectile.GetComponent<Rigidbody2D>().velocity = projectile.transform.right * -10;
+        }
+
+        
+        //Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
+
+    }
+    private void Attack2()
+    {
         if (_currentEnemy.CompareTag("Ally"))
             _currentEnemy.GetComponent<AllyControl>().Damage(_damage);
         else
             _currentEnemy.GetComponent<AllyBase>().Damage(_damage);
-        //Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
-
     }
-
     public void Damage(float damage)
     {
         _hp -= damage;
@@ -115,6 +142,7 @@ public class EnemyControl : MonoBehaviour
                 {
                     nearestDistance = distanceX;
                     _currentEnemy = hitCollider.transform.gameObject;
+                    
                 }
             }
             
@@ -132,6 +160,7 @@ public class EnemyControl : MonoBehaviour
         }
 
     }
+
 
     private void OnTriggerEnter2D(Collider2D unit)
     {

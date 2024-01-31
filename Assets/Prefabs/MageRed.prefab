@@ -175,6 +175,8 @@ MonoBehaviour:
   _isAttacking: 0
   _isIdle: 0
   _range: 0
+  _cost: 0
+  projectilePrefab: {fileID: 5201634233099400261, guid: 92457418c0f04a042b6ba2d6aa2d47c8, type: 3}
 --- !u!50 &192768294914185857
 Rigidbody2D:
   serializedVersion: 4

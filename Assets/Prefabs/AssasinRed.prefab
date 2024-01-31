@@ -175,6 +175,8 @@ MonoBehaviour:
   _isAttacking: 0
   _isIdle: 0
   _range: 0
+  _cost: 0
+  projectilePrefab: {fileID: 0}
 --- !u!50 &3387254583911966352
 Rigidbody2D:
   serializedVersion: 4

@@ -17,7 +17,12 @@ public class AllyControl : MonoBehaviour
     private GameObject _currentEnemy;
     private float _attackTime;
 
+    public GameObject projectilePrefab;
+    private GameObject projectile;
+    private Vector2 target;
+
     private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +63,16 @@ public class AllyControl : MonoBehaviour
             }
             
         }
+
+        if (projectile != null)
+        {
+            target = (_currentEnemy != null) ? _currentEnemy.transform.position : target;
+            if (Vector2.Distance(projectile.transform.position, target) < 0.1f || Vector2.Distance(projectile.transform.position, transform.position) > 4.1f)
+            {
+                Destroy(projectile);
+            }
+        }
+            
     }
 
     private void MoveRight()
@@ -69,11 +84,23 @@ public class AllyControl : MonoBehaviour
     {
         anim.SetTrigger("isAttacking");
         _attackTime = Time.time + _attackSpeed;
+
+        if(projectilePrefab != null)
+        {
+            projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            projectile.GetComponent<Rigidbody2D>().velocity = projectile.transform.right * 10;
+        }
+
+        
+        //Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
+    }
+
+    public void Attack2()
+    {
         if (_currentEnemy.CompareTag("Enemy"))
             _currentEnemy.GetComponent<EnemyControl>().Damage(_damage);
         else
             _currentEnemy.GetComponent<EnemyBase>().Damage(_damage);
-        //Debug.Log(this.name + " hit " + _currentEnemy.name + " " + Time.time);
     }
 
     public void Damage(float damage)
@@ -110,11 +137,9 @@ public class AllyControl : MonoBehaviour
                 {
                     nearestDistance = distanceX;
                     _currentEnemy = hitCollider.transform.gameObject;
+
                 }
             }
-
-
-
 
         }
         if (_currentEnemy != null)
@@ -130,6 +155,7 @@ public class AllyControl : MonoBehaviour
 
 
     }
+
     private void OnTriggerEnter2D(Collider2D unit)
     {
         float distance = this.transform.position.x - unit.transform.position.x;
